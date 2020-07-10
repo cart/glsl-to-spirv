@@ -7,8 +7,6 @@
 // notice may not be copied, modified, or distributed except
 // according to those terms.
 
-extern crate tempfile;
-
 use std::{fs::File, io::Write, process::Command};
 
 pub type SpirvOutput = File;

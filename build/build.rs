@@ -1,12 +1,9 @@
 extern crate cmake;
-extern crate sha2;
 
 use std::env;
 use std::fs;
 use std::path::Path;
 use std::process::Command;
-
-use sha2::{Sha256, Digest};
 
 fn main() {
     println!("cargo:rerun-if-changed=build/glslangValidator.exe");
@@ -15,17 +12,7 @@ fn main() {
     let out_file = Path::new(&env::var("OUT_DIR").unwrap()).join("glslang_validator");
 
     let path = if target.contains("windows") {
-        const SHA256SUM: &'static str = 
-            "90b377479fb137f4ac69460d5f5cdc54cd23bace5eb6e6812516fdfa693b25cf";
-        let path = Path::new("build/glslangValidator.exe").to_owned();
-        let content = fs::read(&path).expect("failed to open executable");
-        let mut hasher = Sha256::default();
-        hasher.input(&content);
-        let result = hasher.result();
-        let sha256sum = format!("{:x}", result);
-        assert_eq!(sha256sum, SHA256SUM, "glslangValidator.exe checksum failed");
-        path
-
+        Path::new("build/glslangValidator.exe").to_owned()
     } else if target.contains("linux") {
         Path::new("build/glslangValidatorLinux").to_owned()
     } else if target.contains("apple-darwin") {
