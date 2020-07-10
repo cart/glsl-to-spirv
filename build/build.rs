@@ -26,6 +26,10 @@ fn main() {
         assert_eq!(sha256sum, SHA256SUM, "glslangValidator.exe checksum failed");
         path
 
+    } else if target.contains("linux") {
+        Path::new("build/glslangValidatorLinux").to_owned()
+    } else if target.contains("apple-darwin") {
+        Path::new("build/glslangValidatorOsx").to_owned()
     } else {
         // Try to initialize submodules. Don't care if it fails, since this code also runs for
         // the crates.io package.
