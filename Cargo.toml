@@ -1,7 +1,7 @@
 [package]
-name = "glsl-to-spirv"
+name = "bevy-glsl-to-spirv"
 version = "0.1.7"
-authors = ["Pierre Krieger <pierre.krieger1708@gmail.com>", "The vulkano contributors"]
+authors = ["Pierre Krieger <pierre.krieger1708@gmail.com>", "The vulkano contributors", "Carter Anderson <mcanders1@gmail.com>"]
 repository = "https://github.com/vulkano-rs/vulkano"
 description = "Deprecated. Use shaderc-rs instead."
 license = "MIT/Apache-2.0"
