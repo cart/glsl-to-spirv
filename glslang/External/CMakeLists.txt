@@ -10,7 +10,8 @@ if(BUILD_TESTING)
         if(WIN32)
             set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
         endif(WIN32)
-        add_subdirectory(googletest)
+        # EXCLUDE_FROM_ALL keeps the install target from installing GTEST files.
+        add_subdirectory(googletest EXCLUDE_FROM_ALL)
         set(GTEST_TARGETS
             gtest
             gtest_main
@@ -33,3 +34,11 @@ if(BUILD_TESTING)
             "Google Mock was not found - tests based on that will not build")
     endif()
 endif()
+
+if(ENABLE_OPT AND NOT TARGET SPIRV-Tools-opt)
+    if(IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/spirv-tools)
+        set(SPIRV_SKIP_TESTS ON CACHE BOOL "Skip building SPIRV-Tools tests")
+        add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/spirv-tools spirv-tools)
+    endif()
+endif()
+

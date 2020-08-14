@@ -39,12 +39,13 @@
 #include <string>
 #include <vector>
 #include <cstdlib>
+#include <exception>
 
 namespace spv {
 
 // MSVC defines __cplusplus as an older value, even when it supports almost all of 11.
 // We handle that here by making our own symbol.
-#if __cplusplus >= 201103L || _MSC_VER >= 1700
+#if __cplusplus >= 201103L || (defined(_MSC_VER) && _MSC_VER >= 1700)
 #   define use_cpp11 1
 #endif
 
@@ -111,7 +112,9 @@ namespace spv {
 class spirvbin_t : public spirvbin_base_t
 {
 public:
-   spirvbin_t(int verbose = 0) : entryPoint(spv::NoResult), largestNewId(0), verbose(verbose) { }
+   spirvbin_t(int verbose = 0) : entryPoint(spv::NoResult), largestNewId(0), verbose(verbose), errorLatch(false)
+   { }
+
    virtual ~spirvbin_t() { }
 
    // remap on an existing binary in memory
@@ -165,7 +168,7 @@ private:
    typedef std::unordered_map<spv::Id, unsigned> typesize_map_t;
 
    // handle error
-   void error(const std::string& txt) const { errorHandler(txt); }
+   void error(const std::string& txt) const { errorLatch = true; errorHandler(txt); }
 
    bool     isConstOp(spv::Op opCode)      const;
    bool     isTypeOp(spv::Op opCode)       const;
@@ -192,7 +195,7 @@ private:
    // Header access & set methods
    spirword_t  magic()    const       { return spv[0]; } // return magic number
    spirword_t  bound()    const       { return spv[3]; } // return Id bound from header
-   spirword_t  bound(spirword_t b)    { return spv[3] = b; };
+   spirword_t  bound(spirword_t b)    { return spv[3] = b; }
    spirword_t  genmagic() const       { return spv[2]; } // generator magic
    spirword_t  genmagic(spirword_t m) { return spv[2] = m; }
    spirword_t  schemaNum() const      { return spv[4]; } // schema number from header
@@ -285,6 +288,11 @@ private:
    // processing options:
    std::uint32_t options;
    int           verbose;     // verbosity level
+
+   // Error latch: this is set if the error handler is ever executed.  It would be better to
+   // use a try/catch block and throw, but that's not desired for certain environments, so
+   // this is the alternative.
+   mutable bool errorLatch;
 
    static errorfn_t errorHandler;
    static logfn_t   logHandler;

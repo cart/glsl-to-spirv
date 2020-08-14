@@ -50,6 +50,7 @@ TEST_P(LinkTest, FromFile)
     const size_t fileCount = fileNames.size();
     const EShMessages controls = DeriveOptions(Source::GLSL, Semantics::OpenGL, Target::AST);
     GlslangResult result;
+    result.validationResult = true;
 
     // Compile each input shader file.
     std::vector<std::unique_ptr<glslang::TShader>> shaders;
@@ -99,8 +100,12 @@ INSTANTIATE_TEST_CASE_P(
         {"150.tesc", "150.tese", "400.tesc", "400.tese", "410.tesc", "420.tesc", "420.tese"},
         {"max_vertices_0.geom"},
         {"es-link1.frag", "es-link2.frag"},
-        {"missingBodies.vert"}
-    })),
+        {"missingBodies.vert"},
+        {"link.multiAnonBlocksInvalid.0.0.vert", "link.multiAnonBlocksInvalid.0.1.vert"},
+        {"link.multiAnonBlocksValid.0.0.vert", "link.multiAnonBlocksValid.0.1.vert"},
+        {"link.multiBlocksInvalid.0.0.vert", "link.multiBlocksInvalid.0.1.vert"},
+        {"link.multiBlocksValid.1.0.vert", "link.multiBlocksValid.1.1.vert"},
+    }))
 );
 // clang-format on
 

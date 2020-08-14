@@ -1,5 +1,6 @@
 //
 // Copyright (C) 2014 LunarG, Inc.
+// Copyright (C) 2015-2018 Google, Inc.
 //
 // All rights reserved.
 //
@@ -34,11 +35,12 @@
 
 #pragma once
 
-#if _MSC_VER >= 1900
+#if defined(_MSC_VER) && _MSC_VER >= 1900
     #pragma warning(disable : 4464) // relative include path contains '..'
 #endif
 
-#include "../glslang/Include/intermediate.h"
+#include "SpvTools.h"
+#include "glslang/Include/intermediate.h"
 
 #include <string>
 #include <vector>
@@ -47,12 +49,8 @@
 
 namespace glslang {
 
-struct SpvOptions {
-    SpvOptions() : generateDebugInfo(false) { }
-    bool generateDebugInfo;
-};
-
 void GetSpirvVersion(std::string&);
+int GetSpirvGeneratorVersion();
 void GlslangToSpv(const glslang::TIntermediate& intermediate, std::vector<unsigned int>& spirv,
                   SpvOptions* options = nullptr);
 void GlslangToSpv(const glslang::TIntermediate& intermediate, std::vector<unsigned int>& spirv,

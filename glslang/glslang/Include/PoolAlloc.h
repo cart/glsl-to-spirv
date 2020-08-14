@@ -250,15 +250,8 @@ private:
 // different times.  But a simple use is to have a global pop
 // with everyone using the same global allocator.
 //
-typedef TPoolAllocator* PoolAllocatorPointer;
 extern TPoolAllocator& GetThreadPoolAllocator();
-
-struct TThreadMemoryPools
-{
-    TPoolAllocator* threadPoolAllocator;
-};
-
-void SetThreadPoolAllocator(TPoolAllocator& poolAllocator);
+void SetThreadPoolAllocator(TPoolAllocator* poolAllocator);
 
 //
 // This STL compatible allocator is intended to be used as the allocator
@@ -311,7 +304,6 @@ public:
     size_type max_size() const { return static_cast<size_type>(-1) / sizeof(T); }
     size_type max_size(int size) const { return static_cast<size_type>(-1) / size; }
 
-    void setAllocator(TPoolAllocator* a) { allocator = *a; }
     TPoolAllocator& getAllocator() const { return allocator; }
 
 protected:
