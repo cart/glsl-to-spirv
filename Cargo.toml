@@ -2,8 +2,8 @@
 name = "bevy-glsl-to-spirv"
 version = "0.1.7"
 authors = ["Pierre Krieger <pierre.krieger1708@gmail.com>", "The vulkano contributors", "Carter Anderson <mcanders1@gmail.com>"]
-repository = "https://github.com/vulkano-rs/vulkano"
-description = "Deprecated. Use shaderc-rs instead."
+description = "Deprecated. This crate is a temporary measure until native rust shader compilation like https://github.com/gfx-rs/naga lands."
+repository = "https://github.com/cart/glsl-to-spirv"
 license = "MIT/Apache-2.0"
 build = "build/build.rs"
 categories = ["rendering::graphics-api"]
