@@ -31,4 +31,8 @@ fn main() {
     println!("cargo:rustc-link-lib=OSDependent");
     println!("cargo:rustc-link-lib=SPIRV");
     println!("cargo:rustc-link-lib=SPVRemapper");
+    if target.contains("x86_64-unknown-linux-gnu") {
+    	println!("cargo:rustc-link-lib=SPIRV-Tools-opt");
+    	println!("cargo:rustc-link-lib=SPIRV-Tools");
+    }
 }
