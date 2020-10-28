@@ -24,6 +24,7 @@ fn main() {
         panic!("Missing target support {}", target);
     };
 
+    // Link order matters, make sure dependents are linked before their dependencies.
     println!("cargo:rustc-link-search={}", bin_dir.to_str().unwrap());
     println!("cargo:rustc-link-lib=glslang");
     println!("cargo:rustc-link-lib=HLSL");
