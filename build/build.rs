@@ -35,4 +35,7 @@ fn main() {
     	println!("cargo:rustc-link-lib=SPIRV-Tools-opt");
     	println!("cargo:rustc-link-lib=SPIRV-Tools");
     }
+    if target.contains("android") {
+        println!("cargo:rustc-link-lib=c++_shared");
+    }
 }
