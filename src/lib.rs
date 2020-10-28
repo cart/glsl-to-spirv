@@ -7,7 +7,6 @@
 // notice may not be copied, modified, or distributed except
 // according to those terms.
 
-
 use std::ffi::{CStr, CString};
 use std::os::raw::c_char;
 

@@ -32,8 +32,8 @@ fn main() {
     println!("cargo:rustc-link-lib=SPIRV");
     println!("cargo:rustc-link-lib=SPVRemapper");
     if target.contains("x86_64-unknown-linux-gnu") || target.contains("x86_64-apple-darwin") {
-    	println!("cargo:rustc-link-lib=SPIRV-Tools-opt");
-    	println!("cargo:rustc-link-lib=SPIRV-Tools");
+        println!("cargo:rustc-link-lib=SPIRV-Tools-opt");
+        println!("cargo:rustc-link-lib=SPIRV-Tools");
     }
     if target.contains("android") {
         println!("cargo:rustc-link-lib=c++_shared");
