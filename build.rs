@@ -50,11 +50,13 @@ fn main() {
 }
 
 fn download_and_extract_lib(platform: &str, path: &str) {
-    let mut resp = reqwest::blocking::get(&format!("{}/{}.zip", RELEASE_URL, platform))
-        .expect("request failed");
+    let resp = ureq::get(&format!("{}/{}.zip", RELEASE_URL, platform)).call();
+    if resp.error() {
+        panic!("request failed");
+    }
     let zip_file = format!("{}.zip", path);
     let mut out = File::create(&zip_file).expect("failed to create file");
-    copy(&mut resp, &mut out).expect("failed to copy content");
+    copy(&mut resp.into_reader(), &mut out).expect("failed to copy content");
     // Upacks zip file to folder
     unzpack::Unzpack::extract(zip_file.clone(), path.to_owned()).unwrap();
     // Deletes zip file

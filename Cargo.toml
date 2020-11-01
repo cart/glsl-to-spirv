@@ -11,4 +11,4 @@ edition = "2018"
 
 [build-dependencies]
 unzpack = "0.1.0"
-reqwest = { version = "0.10", features = ["blocking"] }
+ureq = { version = "1.5.1", default-features = false, features = ["tls"] }
