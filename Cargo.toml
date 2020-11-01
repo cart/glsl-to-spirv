@@ -5,6 +5,10 @@ authors = ["Pierre Krieger <pierre.krieger1708@gmail.com>", "The vulkano contrib
 description = "Deprecated. This crate is a temporary measure until native rust shader compilation like https://github.com/gfx-rs/naga lands."
 repository = "https://github.com/cart/glsl-to-spirv"
 license = "MIT/Apache-2.0"
-build = "build/build.rs"
+build = "build.rs"
 categories = ["rendering::graphics-api"]
 edition = "2018"
+
+[build-dependencies]
+unzpack = "0.1.0"
+reqwest = { version = "0.10", features = ["blocking"] }

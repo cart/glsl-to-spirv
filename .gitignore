@@ -2,3 +2,6 @@
 **/*.rs.bk
 Cargo.lock
 .cargo/config
+build/
+build.zip
+.DS_Store
