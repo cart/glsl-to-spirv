@@ -66,7 +66,7 @@ where
             if shader_defs.is_some() {
                 if let Some(version) = source.find(r##"#version"##) {
                     if let Some(newline) = &source[version..].find('\n') {
-                        source.insert_str(newline + 1, &preamble);
+                        source.insert_str(version + newline + 1, &preamble);
                     }
                 }
             }
