@@ -7,7 +7,9 @@ fn main() {
     bin_dir.push("build");
 
     if target.contains("x86_64-pc-windows-msvc") {
-        bin_dir.push("windows");
+        bin_dir.push("windows-x64");
+    } else if target.contains("i686-pc-windows-msvc") {
+        bin_dir.push("windows-i686");
     } else if target.contains("x86_64-unknown-linux-gnu") {
         bin_dir.push("linux");
     } else if target.contains("x86_64-apple-darwin") {
