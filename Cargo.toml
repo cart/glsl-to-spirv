@@ -1,6 +1,6 @@
 [package]
 name = "bevy-glsl-to-spirv"
-version = "0.2.0"
+version = "0.2.2"
 authors = ["Pierre Krieger <pierre.krieger1708@gmail.com>", "The vulkano contributors", "Carter Anderson <mcanders1@gmail.com>", "Nicholas Rishel <rishel.nick@gmail.com>"]
 description = "Deprecated. This crate is a temporary measure until native rust shader compilation like https://github.com/gfx-rs/naga lands."
 repository = "https://github.com/cart/glsl-to-spirv"
@@ -8,3 +8,7 @@ license = "MIT/Apache-2.0"
 build = "build/build.rs"
 categories = ["rendering::graphics-api"]
 edition = "2018"
+
+[build-dependencies]
+cmake = "0.1.45"
+cc = { version = "1.0.66", features = ["parallel"] }
