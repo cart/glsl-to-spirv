@@ -14,5 +14,7 @@ Assuming an MSVC Windows host (either 32 or 64-bit):
   - Select **Visual C++ build tools**
   - Make sure **Visual C++ tools for CMake** is ticked on the right
   - Restart the computer after installing build tools - will fail to build otherwise
+- `glslang` submodule is assumed to be initialized
+  - Run `git submodule update --init` if you're checking out from git
 
 `glslang` will be built from source the first time. Compiled libraries are re-used afterwards.
