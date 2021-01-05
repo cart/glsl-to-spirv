@@ -1,0 +1,64 @@
+[target.x86_64-pc-windows-msvc.glslang]
+rustc-link-search = ["build/windows"]
+rustc-link-lib = [
+    "HLSL.glsltospirv",
+    "OGLCompiler.glsltospirv",
+    "OSDependent.glsltospirv",
+    "SPIRV.glsltospirv",
+    "SPVRemapper.glsltospirv",
+    "glslang.glsltospirv"
+]
+
+[target.x86_64-unknown-linux-gnu.glslang]
+rustc-link-search = ["build/linux"]
+rustc-link-lib = [
+    "HLSL.glsltospirv",
+    "OGLCompiler.glsltospirv",
+    "OSDependent.glsltospirv",
+    "SPIRV.glsltospirv",
+    "SPVRemapper.glsltospirv",
+    "glslang.glsltospirv",
+    # linux and macOS-specific libraries
+    "SPIRV-Tools-opt.glsltospirv",
+    "SPIRV-Tools.glsltospirv"
+]
+
+[target.x86_64-apple-darwin.glslang]
+rustc-link-search = ["build/osx"]
+rustc-link-lib = [
+    "HLSL.glsltospirv",
+    "OGLCompiler.glsltospirv",
+    "OSDependent.glsltospirv",
+    "SPIRV.glsltospirv",
+    "SPVRemapper.glsltospirv",
+    "glslang.glsltospirv",
+    # linux and macOS-specific libraries
+    "SPIRV-Tools-opt.glsltospirv",
+    "SPIRV-Tools.glsltospirv"
+]
+
+[target.aarch64-linux-android.glslang]
+rustc-link-search = ["build/android-arm64-v8a"]
+rustc-link-lib = [
+    "HLSL.glsltospirv",
+    "OGLCompiler.glsltospirv",
+    "OSDependent.glsltospirv",
+    "SPIRV.glsltospirv",
+    "SPVRemapper.glsltospirv",
+    "glslang.glsltospirv",
+    # android-specific libraries
+    "c++_shared"
+]
+
+[target.armv7-linux-androideabi.glslang]
+rustc-link-search = ["build/android-armeabi-v7a"]
+rustc-link-lib = [
+    "HLSL.glsltospirv",
+    "OGLCompiler.glsltospirv",
+    "OSDependent.glsltospirv",
+    "SPIRV.glsltospirv",
+    "SPVRemapper.glsltospirv",
+    "glslang.glsltospirv",
+    # android-specific libraries
+    "c++_shared"
+]

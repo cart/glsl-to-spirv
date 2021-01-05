@@ -15,28 +15,10 @@ const COMMON_FILES: &[&str] = &[
 ];
 
 fn main() {
-    let target = env::var("TARGET").unwrap();
-    let mut bin_dir = PathBuf::from(&env::var("CARGO_MANIFEST_DIR").unwrap());
-    bin_dir.push("build");
-
-    if target.contains("x86_64-pc-windows-msvc") {
-        bin_dir.push("windows");
-    } else if target.contains("i686-pc-windows-msvc") {
-        bin_dir = build_windows_i686();
-    } else if target.contains("x86_64-unknown-linux-gnu") {
-        bin_dir.push("linux");
-    } else if target.contains("x86_64-apple-darwin") {
-        bin_dir.push("osx");
-    } else if target.contains("android") {
-        if target.contains("aarch64") {
-            bin_dir.push("android-arm64-v8a");
-        } else if target.contains("armv7") {
-            bin_dir.push("android-armeabi-v7a");
-        } else {
-            panic!("Missing Android target support {}", target);
-        }
-    } else {
-        panic!("Missing target support {}", target);
+    let target: &str = &env::var("TARGET").unwrap();
+    let bin_dir = match target {
+        "i686-pc-windows-msvc" => build_libraries(),
+        _ => panic!("Missing target support {}", target),
     };
 
     // Link order matters, make sure dependents are linked before their dependencies.
@@ -56,7 +38,8 @@ fn main() {
     }
 }
 
-fn build_windows_i686() -> PathBuf {
+/// Build target libraries and returns the path they're in
+pub fn build_libraries() -> PathBuf {
     // Prepare directories
     let cargo_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
     let source_dir = cargo_dir.join("glslang");
@@ -69,6 +52,12 @@ fn build_windows_i686() -> PathBuf {
     // Re-use libraries if they exist
     if library_dir.exists() {
         return library_dir;
+    }
+
+    // Check glslang folder is initialized
+    let cmakelists = source_dir.join("CMakeLists.txt");
+    if !cmakelists.exists() {
+        panic!("Please make sure the glslang submodule is initialized");
     }
 
     // Set up "install" subdirectory
@@ -92,7 +81,7 @@ fn build_windows_i686() -> PathBuf {
             library_dir.join(file).with_extension("glsltospirv.lib"),
         ) {
             Ok(_) => {}
-            Err(err) => panic!("Error copying glslang libaries: {}", err),
+            Err(err) => panic!("Error renaming glslang libaries: {}", err),
         }
     });
 
