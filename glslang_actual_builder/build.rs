@@ -4,11 +4,11 @@ fn main() {
     let target: &str = &std::env::var("TARGET").unwrap();
     let cargo_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
     let bin_dir = match target {
-        "x86_64-pc-windows-msvc" => cargo_dir.join("build/windows"),
-        "x86_64-unknown-linux-gnu" => cargo_dir.join("build/linux"),
-        "x86_64-apple-darwin" => cargo_dir.join("build/osx"),
-        "aarch64-linux-android" => cargo_dir.join("build/android-arm64-v8a"),
-        "armv7-linux-androideabi" => cargo_dir.join("build/android-armeabi-v7a"),
+        "x86_64-pc-windows-msvc" => cargo_dir.join("build").join("windows"),
+        "x86_64-unknown-linux-gnu" => cargo_dir.join("build").join("linux"),
+        "x86_64-apple-darwin" => cargo_dir.join("build").join("osx"),
+        "aarch64-linux-android" => cargo_dir.join("build").join("android-arm64-v8a"),
+        "armv7-linux-androideabi" => cargo_dir.join("build").join("android-armeabi-v7a"),
         "i686-pc-windows-msvc" => build::build_libraries(),
         _ => panic!("Unsupported target {}", target),
     };
