@@ -100,7 +100,7 @@ mod build {
             }
         }
 
-        return library_dir;
+        library_dir
     }
 }
 
