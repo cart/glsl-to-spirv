@@ -37,8 +37,6 @@ fn main() {
 
 #[cfg(feature = "build-from-source")]
 mod build {
-    extern crate cmake;
-
     use std::path::Path;
     use std::path::PathBuf;
 
@@ -49,7 +47,7 @@ mod build {
         let cargo_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
         let source_dir = cargo_dir.join("glslang");
 
-        let out_dir_env = std::env::var("OUT_DIR").unwrap().clone();
+        let out_dir_env = std::env::var("OUT_DIR").unwrap();
         let out_dir = Path::new(&out_dir_env);
         let install_dir = out_dir.join("install");
         let library_dir = install_dir.join("lib");
