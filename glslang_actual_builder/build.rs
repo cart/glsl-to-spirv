@@ -10,6 +10,8 @@ fn main() {
         "aarch64-linux-android" => cargo_dir.join("build").join("android-arm64-v8a"),
         "armv7-linux-androideabi" => cargo_dir.join("build").join("android-armeabi-v7a"),
         "i686-pc-windows-msvc" => build::build_libraries(&target),
+        "x86_64-pc-windows-gnu" => build::build_libraries(&target),
+        "i686-pc-windows-gnu" => build::build_libraries(&target),
         _ => panic!("Unsupported target {}", target),
     };
 
@@ -27,6 +29,9 @@ fn main() {
     }
     if target.contains("android") {
         println!("cargo:rustc-link-lib=c++_shared");
+    }
+    if target.ends_with("-pc-windows-gnu") {
+        println!("cargo:rustc-link-lib=dylib=stdc++");
     }
 }
 
@@ -70,12 +75,16 @@ mod build {
         }
 
         // Common configuration
-        cmake::Config::new(&source_dir)
+        let mut config = cmake::Config::new(&source_dir);
+        config
             .define("CMAKE_INSTALL_PREFIX", &install_dir)
+            .define("CMAKE_TRY_COMPILE_TARGET_TYPE", "STATIC_LIBRARY")
             .define("ENABLE_GLSLANG_BINARIES", "OFF")
             .profile("Release")
-            .build_target("install")
-            .build();
+            .build_target("install");
+
+        // Build config
+        config.build();
 
         // Add vendor suffix to all library names
         for path in library_dir

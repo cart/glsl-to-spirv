@@ -8,9 +8,6 @@ license = "MIT/Apache-2.0"
 categories = ["rendering::graphics-api"]
 edition = "2018"
 
-[lib]
-name = "glsl_to_spirv"
-
 [dependencies]
 # Default panic message handling
 glslang_actual_builder = { path = "glslang_actual_builder", default-features = false }
@@ -32,4 +29,10 @@ glslang_actual_builder = { path = "glslang_actual_builder", default-features = f
 glslang_actual_builder = { path = "glslang_actual_builder", default-features = false }
 
 [target.i686-pc-windows-msvc.dependencies]
+glslang_actual_builder = { path = "glslang_actual_builder", features = ["build-from-source"] }
+
+[target.x86_64-pc-windows-gnu.dependencies]
+glslang_actual_builder = { path = "glslang_actual_builder", features = ["build-from-source"] }
+
+[target.i686-pc-windows-gnu.dependencies]
 glslang_actual_builder = { path = "glslang_actual_builder", features = ["build-from-source"] }
