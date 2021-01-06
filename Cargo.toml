@@ -8,6 +8,9 @@ license = "MIT/Apache-2.0"
 categories = ["rendering::graphics-api"]
 edition = "2018"
 
+[lib]
+name = "glsl_to_spirv"
+
 [dependencies]
 # Default panic message handling
 glslang_actual_builder = { path = "glslang_actual_builder", default-features = false }

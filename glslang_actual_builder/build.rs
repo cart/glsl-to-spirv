@@ -9,7 +9,7 @@ fn main() {
         "x86_64-apple-darwin" => cargo_dir.join("build").join("osx"),
         "aarch64-linux-android" => cargo_dir.join("build").join("android-arm64-v8a"),
         "armv7-linux-androideabi" => cargo_dir.join("build").join("android-armeabi-v7a"),
-        "i686-pc-windows-msvc" => build::build_libraries(),
+        "i686-pc-windows-msvc" => build::build_libraries(&target),
         _ => panic!("Unsupported target {}", target),
     };
 
@@ -37,18 +37,9 @@ mod build {
     use std::path::Path;
     use std::path::PathBuf;
 
-    const COMMON_FILES: &[&str] = &[
-        "glslang",
-        "HLSL",
-        "OGLCompiler",
-        "OSDependent",
-        "SPIRV",
-        "SPVRemapper",
-    ];
-
     /// Build target libraries if required,
     /// and returns the location of library files
-    pub fn build_libraries() -> PathBuf {
+    pub fn build_libraries(_target: &str) -> PathBuf {
         // Prepare directories
         let cargo_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
         let source_dir = cargo_dir.join("glslang");
@@ -59,8 +50,11 @@ mod build {
         let library_dir = install_dir.join("lib");
 
         // Re-use libraries if they exist
-        if library_dir.exists() {
-            return library_dir;
+        if let Ok(mut entry) = library_dir.read_dir() {
+            if entry.next().is_some() {
+                // a file exists in the path
+                return library_dir;
+            }
         }
 
         // Check glslang folder is initialized
@@ -75,7 +69,7 @@ mod build {
             Err(err) => panic!("Unable to create directory: {:?}", err),
         }
 
-        // Configure and run build
+        // Common configuration
         cmake::Config::new(&source_dir)
             .define("CMAKE_INSTALL_PREFIX", &install_dir)
             .define("ENABLE_GLSLANG_BINARIES", "OFF")
@@ -83,16 +77,21 @@ mod build {
             .build_target("install")
             .build();
 
-        // Rename library files
-        COMMON_FILES.iter().for_each(|file| {
-            match std::fs::copy(
-                library_dir.join(file).with_extension("lib"),
-                library_dir.join(file).with_extension("glsltospirv.lib"),
-            ) {
-                Ok(_) => {}
-                Err(err) => panic!("Error renaming glslang libaries: {}", err),
+        // Add vendor suffix to all library names
+        for path in library_dir
+            .read_dir()
+            .expect("Unable to locate compiled glslang libraries")
+        {
+            let filename = path.unwrap().path();
+            let metadata = std::fs::metadata(&filename).unwrap();
+            if metadata.is_file() {
+                let extension = filename.extension().unwrap().to_str().unwrap();
+                let new_extension = format!("glsltospirv.{}", extension);
+                let new_name = filename.with_extension(new_extension);
+                std::fs::copy(&filename, &new_name)
+                    .expect("Failed to rename a glslang library for linking");
             }
-        });
+        }
 
         return library_dir;
     }
@@ -104,7 +103,7 @@ mod build {
 
     /// Build target libraries if required,
     /// and returns the location of library files
-    pub fn build_libraries() -> PathBuf {
-        panic!("This platform must build glslang from source.");
+    pub fn build_libraries(target: &str) -> PathBuf {
+        panic!("Platform {} must build glslang from source.", &target);
     }
 }
