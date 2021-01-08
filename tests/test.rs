@@ -7,7 +7,7 @@
 // notice may not be copied, modified, or distributed except
 // according to those terms.
 
-extern crate glsl_to_spirv;
+extern crate bevy_glsl_to_spirv;
 
 #[test]
 fn test1() {
@@ -21,5 +21,5 @@ void main() {
 }
 "#;
 
-    glsl_to_spirv::compile(shader, glsl_to_spirv::ShaderType::Fragment, None).unwrap();
+    bevy_glsl_to_spirv::compile(shader, bevy_glsl_to_spirv::ShaderType::Fragment, None).unwrap();
 }
