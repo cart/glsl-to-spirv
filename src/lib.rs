@@ -1,3 +1,3 @@
-extern crate glslang_actual_builder;
+extern crate bevy_glsl_to_spirv_builder;
 
-pub use glslang_actual_builder::*;
+pub use bevy_glsl_to_spirv_builder::*;

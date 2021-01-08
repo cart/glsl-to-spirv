@@ -1,8 +1,8 @@
 [package]
-name = "glslang_actual_builder"
+name = "bevy-glsl-to-spirv-builder"
 version = "0.1.0"
 authors = ["Pierre Krieger <pierre.krieger1708@gmail.com>", "The vulkano contributors", "Carter Anderson <mcanders1@gmail.com>", "Nicholas Rishel <rishel.nick@gmail.com>", "Martin Krisnanto Putra <grygrflzr@hotmail.com>"]
-description = "Internal builder"
+description = "Builds glslang from source for bevy-glsl-to-spirv"
 repository = "https://github.com/cart/glsl-to-spirv"
 license = "MIT/Apache-2.0"
 build = "build.rs"
