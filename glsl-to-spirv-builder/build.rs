@@ -4,17 +4,20 @@ fn main() {
     let target: &str = &std::env::var("TARGET").unwrap();
     let cargo_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
     let bin_dir = match target {
-        // use pre-compiled
-        "x86_64-pc-windows-msvc" => cargo_dir.join("build").join(&target),
-        "x86_64-unknown-linux-gnu" => cargo_dir.join("build").join(&target),
-        "x86_64-apple-darwin" => cargo_dir.join("build").join(&target),
-        "aarch64-linux-android" => cargo_dir.join("build").join(&target),
-        "armv7-linux-androideabi" => cargo_dir.join("build").join(&target),
-        // build from source
-        "i686-pc-windows-msvc" => build::build_libraries(&target),
-        "x86_64-pc-windows-gnu" => build::build_libraries(&target),
-        "i686-pc-windows-gnu" => build::build_libraries(&target),
-        _ => panic!("Unsupported target {}", target),
+        // always use pre-compiled
+        "x86_64-pc-windows-msvc"
+        | "x86_64-unknown-linux-gnu"
+        | "x86_64-apple-darwin"
+        | "aarch64-linux-android"
+        | "armv7-linux-androideabi" => cargo_dir.join("build").join(&target),
+
+        // always build from source
+        "i686-pc-windows-msvc" | "x86_64-pc-windows-gnu" | "i686-pc-windows-gnu" => {
+            build::build_libraries(&target)
+        }
+
+        // unsupported targets
+        _ => panic!("Unsupported target {}", &target),
     };
 
     // Link order matters, make sure dependants are linked before their dependencies.
