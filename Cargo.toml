@@ -10,29 +10,32 @@ edition = "2018"
 
 [dependencies]
 # Default panic message handling
-glslang_actual_builder = { path = "glslang_actual_builder", default-features = false }
+bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", default-features = false }
 
-# Supported Platforms
-[target.x86_64-pc-windows-msvc.dependencies]
-glslang_actual_builder = { path = "glslang_actual_builder", default-features = false }
-
+# Pre-built libraries
 [target.x86_64-unknown-linux-gnu.dependencies]
-glslang_actual_builder = { path = "glslang_actual_builder", default-features = false }
+bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", default-features = false }
 
 [target.x86_64-apple-darwin.dependencies]
-glslang_actual_builder = { path = "glslang_actual_builder", default-features = false }
+bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", default-features = false }
 
 [target.aarch64-linux-android.dependencies]
-glslang_actual_builder = { path = "glslang_actual_builder", default-features = false }
+bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", default-features = false }
 
 [target.armv7-linux-androideabi.dependencies]
-glslang_actual_builder = { path = "glslang_actual_builder", default-features = false }
+bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", default-features = false }
 
+# Optionally build from source in the future
+# Wait for cargo resolver version 2
+[target.x86_64-pc-windows-msvc.dependencies]
+bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", default-features = false  }
+
+# Always build from source
 [target.i686-pc-windows-msvc.dependencies]
-glslang_actual_builder = { path = "glslang_actual_builder", features = ["build-from-source"] }
+bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", features = ["build-from-source"] }
 
 [target.x86_64-pc-windows-gnu.dependencies]
-glslang_actual_builder = { path = "glslang_actual_builder", features = ["build-from-source"] }
+bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", features = ["build-from-source"] }
 
 [target.i686-pc-windows-gnu.dependencies]
-glslang_actual_builder = { path = "glslang_actual_builder", features = ["build-from-source"] }
+bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", features = ["build-from-source"] }
