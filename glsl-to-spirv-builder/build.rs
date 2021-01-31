@@ -7,10 +7,12 @@ fn main() {
         // always use pre-compiled
         "x86_64-pc-windows-msvc"
         | "x86_64-unknown-linux-gnu"
-        | "x86_64-apple-darwin"
-        | "aarch64-apple-darwin"
         | "aarch64-linux-android"
         | "armv7-linux-androideabi" => cargo_dir.join("build").join(&target),
+
+        "x86_64-apple-darwin" | "aarch64-apple-darwin" => {
+            cargo_dir.join("build/universal-apple-darwin")
+        }
 
         // always build from source
         "i686-pc-windows-msvc" | "x86_64-pc-windows-gnu" | "i686-pc-windows-gnu" => {
