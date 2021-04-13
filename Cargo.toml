@@ -1,6 +1,6 @@
 [package]
 name = "bevy-glsl-to-spirv"
-version = "0.2.2"
+version = "0.3.0"
 authors = ["Pierre Krieger <pierre.krieger1708@gmail.com>", "The vulkano contributors", "Carter Anderson <mcanders1@gmail.com>", "Nicholas Rishel <rishel.nick@gmail.com>", "Martin Krisnanto Putra <grygrflzr@hotmail.com>"]
 description = "Deprecated. This crate is a temporary measure until native rust shader compilation like https://github.com/gfx-rs/naga lands."
 repository = "https://github.com/cart/glsl-to-spirv"
