@@ -38,6 +38,12 @@ fn main() {
     if target.ends_with("-pc-windows-gnu") {
         println!("cargo:rustc-link-lib=dylib=stdc++");
     }
+
+    if target.contains("darwin") {
+        println!("cargo:rustc-link-lib={}", "c++");
+    } else if target.contains("linux") {
+        println!("cargo:rustc-link-lib={}", "stdc++");
+    }
 }
 
 #[cfg(feature = "build-from-source")]
