@@ -7,9 +7,12 @@ fn main() {
         // always use pre-compiled
         "x86_64-pc-windows-msvc"
         | "x86_64-unknown-linux-gnu"
-        | "x86_64-apple-darwin"
         | "aarch64-linux-android"
         | "armv7-linux-androideabi" => cargo_dir.join("build").join(&target),
+
+        "x86_64-apple-darwin" | "aarch64-apple-darwin" => {
+            cargo_dir.join("build/universal-apple-darwin")
+        }
 
         // always build from source
         "i686-pc-windows-msvc" | "x86_64-pc-windows-gnu" | "i686-pc-windows-gnu" => {
@@ -28,7 +31,7 @@ fn main() {
     println!("cargo:rustc-link-lib=OSDependent.glsltospirv");
     println!("cargo:rustc-link-lib=SPIRV.glsltospirv");
     println!("cargo:rustc-link-lib=SPVRemapper.glsltospirv");
-    if target.contains("x86_64-unknown-linux-gnu") || target.contains("x86_64-apple-darwin") {
+    if target == "x86_64-unknown-linux-gnu" || target.ends_with("-apple-darwin") {
         println!("cargo:rustc-link-lib=SPIRV-Tools-opt.glsltospirv");
         println!("cargo:rustc-link-lib=SPIRV-Tools.glsltospirv");
     }

@@ -19,6 +19,9 @@ bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", default-features 
 [target.x86_64-apple-darwin.dependencies]
 bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", default-features = false }
 
+[target.aarch64-apple-darwin.dependencies]
+bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", default-features = false }
+
 [target.aarch64-linux-android.dependencies]
 bevy-glsl-to-spirv-builder = { path = "glsl-to-spirv-builder", default-features = false }
 
